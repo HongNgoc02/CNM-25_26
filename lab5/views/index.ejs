@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. Cấu hình chung */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 2. Style cho Form nhập liệu */
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e1e4e8;
+            margin-bottom: 40px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1; /* Chia đều cột */
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="text"], 
+        input[type="number"], 
+        input[type="file"] {
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+        }
+
+        .btn-submit {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #1557b0;
+        }
+
+        /* 3. Style cho Bảng danh sách */
+        h3 {
+            border-left: 5px solid #1a73e8;
+            padding-left: 10px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 0 1px #e1e4e8;
+        }
+
+        thead {
+            background-color: #343a40;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        /* Hiệu ứng dòng chẵn lẻ */
+        tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+
+        /* Ảnh thumbnail */
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Nút xóa */
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-delete:hover {
+            opacity: 0.8;
+        }
+
+        /* Style cho trạng thái trống */
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🛍️ Quản Lý Sản Phẩm</h2>
+
+        <div class="form-container">
+            <form action="/save" method="POST" enctype="multipart/form-data">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tên Sản Phẩm</label>
+                        <input type="text" name="name" required placeholder="Ví dụ: iPhone 15 Pro Max">
+                    </div>
+                    <div class="form-group">
+                        <label>Đơn Giá (VNĐ)</label>
+                        <input type="number" name="price" required placeholder="Ví dụ: 30000000">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Số Lượng</label>
+                        <input type="number" name="quantity" required placeholder="Nhập số lượng tồn kho">
+                    </div>
+                    <div class="form-group">
+                        <label>Hình Ảnh Minh Họa</label>
+                        <input type="file" name="image" required accept="image/*">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">💾 Lưu Sản Phẩm</button>
+            </form>
+        </div>
+
+        <h3>Danh Sách Hiện Có</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">ID</th>
+                    <th style="width: 25%;">Tên SP</th>
+                    <th style="width: 15%;">Giá</th>
+                    <th style="width: 10%;">SL</th>
+                    <th style="width: 15%;">Hình ảnh</th>
+                    <th style="width: 10%;">Tác vụ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(products.length > 0) { %>
+                    <% products.forEach(p => { %>
+                    <tr>
+                        <td style="font-size: 12px; color: #666;"><%= p.id %></td>
+                        <td style="font-weight: 500;"><%= p.name %></td>
+                        <td style="color: #d63384; font-weight: bold;"><%= Number(p.price).toLocaleString('vi-VN') %> ₫</td>
+                        <td>
+                            <span style="background: #e9ecef; padding: 4px 8px; border-radius: 12px; font-size: 12px;">
+                                <%= p.quantity %>
+                            </span>
+                        </td>
+                        <td>
+                            <% if(p.url_image) { %>
+                                <img src="<%= p.url_image %>" class="product-img" alt="sp">
+                            <% } else { %>
+                                <span style="color: #999; font-size: 12px;">No Image</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <form action="/delete" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');" style="margin:0;">
+                                <input type="hidden" name="id" value="<%= p.id %>">
+                                <button type="submit" class="btn-delete">🗑️ Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            Hiện chưa có dữ liệu nào trong DynamoDB.
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
