@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">Thêm sản phẩm mới</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/create" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Mã sản phẩm (ID):</label>
+                            <input type="text" name="id" class="form-control" placeholder="Ví dụ: SP001" required>
+                            <div class="form-text text-danger">Lưu ý: Không được nhập trùng ID đã có trên hệ thống.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên sản phẩm:</label>
+                            <input type="text" name="name" class="form-control" placeholder="Nhập tên sản phẩm" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Giá bán (VNĐ):</label>
+                                <input type="number" name="price" class="form-control" min="0" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Số lượng tồn:</label>
+                                <input type="number" name="unit_in_stock" class="form-control" min="0" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Hình ảnh sản phẩm:</label>
+                            <input type="file" name="url_image" class="form-control" accept="image/*" required>
+                        </div>
+
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <a href="/" class="btn btn-secondary">Quay lại</a>
+                            <button type="submit" class="btn btn-success px-4">Lưu sản phẩm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

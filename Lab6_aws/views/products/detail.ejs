@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h3 class="card-title mb-0">Chi tiết sản phẩm</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <% if(product.url_image) { %>
+                                <img src="<%= product.url_image %>" class="img-fluid rounded shadow-sm" alt="<%= product.name %>">
+                            <% } else { %>
+                                <div class="p-5 bg-light text-muted">Chưa có hình ảnh</div>
+                            <% } %>
+                        </div>
+                        
+                        <div class="col-md-7">
+                            <h4 class="text-primary mb-3"><%= product.name %></h4>
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 150px;">Mã sản phẩm:</th>
+                                        <td><span class="badge bg-secondary fs-6"><%= product.id %></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Giá bán:</th>
+                                        <td><strong class="text-danger fs-5"><%= product.price.toLocaleString('vi-VN') %> VNĐ</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số lượng tồn kho:</th>
+                                        <td><%= product.unit_in_stock %> sản phẩm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <div class="mt-4">
+                                <a href="/edit/<%= product.id %>" class="btn btn-warning me-2">Sửa thông tin</a>
+                                <a href="/" class="btn btn-secondary">Quay lại danh sách</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

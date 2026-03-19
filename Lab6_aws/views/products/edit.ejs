@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-warning">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="card-title mb-0">Cập nhật sản phẩm</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/edit" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Mã sản phẩm (ID):</label>
+                            <input type="text" name="id" class="form-control" value="<%= product.id %>" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên sản phẩm:</label>
+                            <input type="text" name="name" class="form-control" value="<%= product.name %>" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Giá bán:</label>
+                                <input type="number" name="price" class="form-control" value="<%= product.price %>" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Số lượng tồn:</label>
+                                <input type="number" name="unit_in_stock" class="form-control" value="<%= product.unit_in_stock %>" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ảnh hiện tại:</label><br>
+                            <% if(product.url_image) { %>
+                                <img src="<%= product.url_image %>" width="100" class="img-thumbnail mb-2">
+                            <% } %>
+                            
+                            <input type="hidden" name="old_image" value="<%= product.url_image %>">
+                            
+                            <label class="form-label fw-bold mt-2">Đổi ảnh mới (Để trống nếu giữ nguyên ảnh cũ):</label>
+                            <input type="file" name="url_image" class="form-control" accept="image/*">
+                        </div>
+
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <a href="/" class="btn btn-secondary">Hủy bỏ</a>
+                            <button type="submit" class="btn btn-warning px-4 text-dark fw-bold">Cập nhật</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
